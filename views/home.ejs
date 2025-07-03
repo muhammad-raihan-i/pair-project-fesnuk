@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include("style.ejs") %>
+    <title>FESNUK</title>
+</head>
+<body>
+    <%- include("navbar.ejs") %>
+    <div class="homePage">
+        <% posts.forEach(e=>{%>
+            <div>
+                <%= e.content %><br>
+                <img src="<%= e.image %>">
+            </div>
+        <%})%>
+    </div>
+</body>
+</html>

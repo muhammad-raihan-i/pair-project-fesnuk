@@ -1,53 +1,81 @@
-const Model=require("../model")
+const {User} =require("../models")
+const bcrypt = require('bcryptjs')
 class SpecialController{
     //method: get
     //link: /login
     //usage: access
     //number: 1
-    static async getLogin(request,response){
-        try{
-           //let {params,query}=request
-            let content=await ModelName.findAll()
-        }catch(error){
-            response.send(error)
-        }
+    static getLogin(request,response){
+        const {error} = request.query
+        response.render('login',{error})
     }
     //method: post
     //link: /login
     //usage: access
     //number: 2
-    static async postLogin(request,response){
-        try{
-       let {params,query}=request
-            await ModelName.create()
-        }catch(error){
-            response.send(error)
-        }
+    static postLogin(request,response){
+       const {username,password} = request.body
+
+        User.findOne({
+            where: {username} 
+        })
+        .then(user =>{
+            if(user){
+                const isValidPassword  = bcrypt.compareSync(password, user.password) //compare passwoord true or false
+
+                if (isValidPassword) {  
+                    //case berhasil login
+                    request.session.userId = user.id  //cara pemanggilan sessions// ngasih jejak ada user login dengan id tersebut
+                    return response.redirect('/')   //kalau valid redirect ke home
+                    }else {
+                        const error = 'invalid username/password'
+                        return response.redirect(`/login?error=${error}`)
+                    }
+                  }else{
+                      const error = 'invalid username/password'
+                      return response.redirect(`/login?error=${error}`)
+                  }
+
+        })
+        .catch(error => {console.log(error);response.send(error);} )
+        
     }
+
     //method: get
     //link: /register
     //usage: create
     //number: 3
-    static async getRegister(request,response){
-        try{
-           //let {params,query}=request
-            let content=await ModelName.findAll()
-        }catch(error){
-            response.send(error)
-        }
+    static getRegister(request,response){
+        response.render('register')
     }
     //method: post
     //link: /register
     //usage: create
     //number: 4
-    static async postRegister(request,response){
-        try{
-       let {params,query}=request
-            await ModelName.create()
-        }catch(error){
-            response.send(error)
-        }
+    static postRegister(request,response){
+        //create user,password,email dari body
+        const{username,password,email} = request.body
+        User.create({username,password,email})
+            .then(newUser =>{
+                response.redirect('/login')
+            })
+            .catch(error => response.send(error))
     }
+    //method: get
+    //link: /login
+    //usage: access
+    //number: 4A
+    static logout(request,response){
+        request.session.destroy((error) => {
+            if (error) {
+                response.send(error);
+                
+            }else{
+                response.redirect('/login')
+            }
+        })
+    }
+ 
 }
 
 module.exports=SpecialController

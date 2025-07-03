@@ -1,13 +1,53 @@
-const Model=require("../model")
+const {User,Post,Tag,PostTag,Profile}=require("../models")
 class GeneralController{
+
+    //method: get
+    //link: /
+    //usage: read
+    //number: 4b
+    static async getAddMyProfile(request,response){
+        try{
+            //let {params,query}=request
+            //let posts=await Post.findAll()
+            response.render("inputProfile")
+        }catch(error){
+            response.send(error)
+        }
+    }
+    //method: get
+    //link: /
+    //usage: read
+    //number: 4c
+    static async postAddMyProfile(request,response){
+        try{
+            //{phoneNumber,dateOfBirth,name,nickName,profilePicUrl,bio}
+            let abc=request.body
+            //response.send(abc)
+            response.redirect("/")
+        }catch(error){
+            response.send(error)
+
+        }
+    }
+
     //method: get
     //link: /home
     //usage: read
     //number: 5
     static async getHome(request,response){
         try{
-           //let {params,query}=request
-            let content=await ModelName.findAll()
+            let posts=await Post.findAll(
+                {
+                include:{
+                    model : PostTag,
+                    include: {
+                        model : Tag
+                    }
+                }
+                }
+            )
+            response.send(posts)
+            // response.render("home",{posts})
         }catch(error){
             response.send(error)
         }
