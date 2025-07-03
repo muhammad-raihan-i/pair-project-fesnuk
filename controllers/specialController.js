@@ -26,7 +26,7 @@ class SpecialController{
                 if (isValidPassword) {  
                     //case berhasil login
                     request.session.userId = user.id  //cara pemanggilan sessions// ngasih jejak ada user login dengan id tersebut
-                    return response.redirect('/')   //kalau valid redirect ke home
+                    return response.redirect('/profile/input')   //kalau valid redirect ke home
                     }else {
                         const error = 'invalid username/password'
                         return response.redirect(`/login?error=${error}`)

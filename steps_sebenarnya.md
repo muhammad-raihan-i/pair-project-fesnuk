@@ -3,7 +3,7 @@ tahap pengerjaan
 1. di console, npm init -y done
 
 2. install express pg ejs sequelize
-`npm install express pg ejs sequelize`
+`npm i express pg ejs sequelize`
 
 3. kemudian install setting CLI
 `npm i -D sequelize-cli`

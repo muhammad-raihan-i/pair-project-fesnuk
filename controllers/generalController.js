@@ -7,9 +7,14 @@ class GeneralController{
     //number: 4b
     static async getAddMyProfile(request,response){
         try{
-            //let {params,query}=request
-            //let posts=await Post.findAll()
-            response.render("inputProfile")
+            let UserId=request.session.userId
+            let data=await Profile.findByPk(UserId)
+            console.log("\n",data,"hai aku data")
+            if(!data){
+                response.render("inputProfile")
+            }else{
+                response.redirect("/")
+            }
         }catch(error){
             response.send(error)
         }
@@ -21,8 +26,10 @@ class GeneralController{
     static async postAddMyProfile(request,response){
         try{
             //{phoneNumber,dateOfBirth,name,nickName,profilePicUrl,bio}
-            let abc=request.body
-            //response.send(abc)
+            let UserId=request.session.userId
+            let {phoneNumber,dateOfBirth,name,nickName,profilePicUrl,bio}=request.body
+            console.log(phoneNumber,dateOfBirth,name,nickName,profilePicUrl,bio,UserId)
+            await Profile.create({phoneNumber,dateOfBirth,name,nickName,profilePicUrl,bio,UserId})
             response.redirect("/")
         }catch(error){
             response.send(error)
@@ -36,18 +43,23 @@ class GeneralController{
     //number: 5
     static async getHome(request,response){
         try{
-            let posts=await Post.findAll(
-                {
+            let posts=await Post.findAll({
                 include:{
                     model : PostTag,
                     include: {
                         model : Tag
                     }
                 }
+            })
+            let poster=await Post.findAll({
+                include:{
+                    model : User,
+                    include: {
+                        model : Profile
+                    }
                 }
-            )
-            response.send(posts)
-            // response.render("home",{posts})
+            })
+            response.render("home",{posts,poster})
         }catch(error){
             response.send(error)
         }
@@ -58,32 +70,9 @@ class GeneralController{
     //number: 6
     static async getMyProfile(request,response){
         try{
-           //let {params,query}=request
-            let content=await ModelName.findAll()
-        }catch(error){
-            response.send(error)
-        }
-    }
-    //method: get
-    //link: /profile/me/edit
-    //usage: update
-    //number: 7
-    static async getEditMyProfile(request,response){
-        try{
-           //let {params,query}=request
-            let content=await ModelName.findAll()
-        }catch(error){
-            response.send(error)
-        }
-    }
-    //method: post
-    //link: /profile/me/edit
-    //usage: update
-    //number: 8
-    static async postEditMyProfile(request,response){
-        try{
-       let {params,query}=request
-            await ModelName.create()
+            let UserId=request.session.userId
+            let profile=await Profile.findByPk(UserId)
+            response.send(profile)
         }catch(error){
             response.send(error)
         }
@@ -101,37 +90,13 @@ class GeneralController{
         }
     }
     //method: get
-    //link: /account/:userId
-    //usage: update
-    //number: 10
-    static async getEditAccount(request,response){
-        try{
-           //let {params,query}=request
-            let content=await ModelName.findAll()
-        }catch(error){
-            response.send(error)
-        }
-    }
-    //method: post
-    //link: /account/:userId
-    //usage: update
-    //number: 11
-    static async postEditAccount(request,response){
-        try{
-       let {params,query}=request
-            await ModelName.create()
-        }catch(error){
-            response.send(error)
-        }
-    }
-    //method: get
     //link: /post/add
     //usage: create
     //number: 12
     static async getAddPost(request,response){
         try{
-           //let {params,query}=request
-            let content=await ModelName.findAll()
+            //let content=await ModelName.findAll()
+            response.render("addPost")
         }catch(error){
             response.send(error)
         }
