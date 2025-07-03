@@ -1,0 +1,31 @@
+
+[
+    {
+       "id":1,
+       "username":"Admin",
+       "email":"admin@example.com",
+       "password":""
+
+    },
+    {
+       "id":2,
+       "username":"UserDummy",
+       "email":"dummy@gmail.com",
+       "password":""
+
+    },
+    {
+       "id":3,
+       "username":"UserSerSer",
+       "email":"aduh@yahoo.com",
+       "password":""
+
+    },
+    {
+       "id":4,
+       "username":"ngakngok",
+       "email":"xyz@yandex.ru",
+       "password":""
+
+    }
+]

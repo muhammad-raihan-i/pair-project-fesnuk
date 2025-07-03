@@ -1,0 +1,42 @@
+[
+    {
+       "id":1,
+       "phoneNumber":"088812345678",
+       "dateOfBirth":"2000-01-01",
+       "name":"adm1n",
+       "profilePicUrl":"https://hdstockimages.com/blog/steps-to-create-a-100x100-pixel-image/",
+       "bio":"Krungthepmahanakhon Amonrattanakosin Mahintharayutthaya Mahadilokphop Noppharatratchathaniburirom Udomratchaniwetma hasathan Amonphimanawatansathit Sakkathattiyawitsanukamprasit",
+       "UserId":1
+
+    },
+    {
+       "id":2,
+       "phoneNumber":"0123456789",
+       "dateOfBirth":"2000-02-02",
+       "name":"dummy",
+       "profilePicUrl":"https://hdstockimages.com/blog/steps-to-create-a-100x100-pixel-image/",
+       "bio":"lorem ipsum dolor sit amet adipiscing elit",
+       "UserId":2
+
+    },
+    {
+       "id":3,
+       "phoneNumber":"0000000000",
+       "dateOfBirth":"2000-03-03",
+       "name":"ser",
+       "profilePicUrl":"https://hdstockimages.com/blog/steps-to-create-a-100x100-pixel-image/",
+       "bio":"ini dia si jali jali lagunya enak lagunya enak merdu sekali capek sedikit tidak peduli sayang asalkan tuan senang di hati",
+       "UserId":3
+
+    },
+    {
+       "id":4,
+       "phoneNumber":"3141592653589792",
+       "dateOfBirth":"2000-04-04",
+       "name":"ngakngekngikngoknguk",
+       "profilePicUrl":"https://hdstockimages.com/blog/steps-to-create-a-100x100-pixel-image/",
+       "bio":"Watashi no na wa Kira Yoshikage   Nenre san-juu-san sai   Jitaku wa Morioh-cho hokuto bu no bessou chitai ni ari  kekkon wa shiteinai.",
+       "UserId":4
+
+    }
+]

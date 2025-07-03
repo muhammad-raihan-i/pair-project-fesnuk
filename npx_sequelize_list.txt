@@ -1,0 +1,12 @@
+npx sequelize model:create --name (NamaTabel) --attributes (attribute1:value1,attribute2:value2...)
+
+1
+npx sequelize model:create --name User --attributes username:string,email:string,password:string
+2
+npx sequelize model:create --name Profile --attributes phoneNumber:string,dateOfBirth:date,name:string,profilePicUrl:string,bio:string,UserId:number
+3
+npx sequelize model:create --name Post --attributes content:string,image:string,UserId:number
+4
+npx sequelize model:create --name Tag --attributes tagName:string
+5
+npx sequelize model:create --name PostTag --attributes TagId:number,PostId:number
