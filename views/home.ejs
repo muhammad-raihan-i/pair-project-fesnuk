@@ -8,13 +8,28 @@
 </head>
 <body>
     <%- include("navbar.ejs") %>
-    <div class="homePage">
-        <% posts.forEach(e=>{%>
-            <div>
-                <%= e.content %><br>
-                <img src="<%= e.image %>">
+    <div class="homePage bgDark">
+        <br>
+        <div class="m10">
+        <form method="post" action="/profile">
+            <input type="text">
+            <input type="submit" value="Search by Username">
+        </form>
+        </div>
+        <% for(let i=0;i<posts.length;i++){e=posts[i]%>
+            <div class="postingan bgLight p30 m10">
+                
+                <p><img src="<%= profiles[i].User.Profile.profilePicUrl %>" width="60px" height="60px"> @<%= profiles[i].User.username %></p>
+                <img src="<%= e.image %>" width="300px" height="auto"><br>
+                <p><%= e.content %></p>
+                <% let tags=[]; e.PostTags.forEach(f=>{tags.push(f.Tag.tagName)}) %>
+                <p>Tags: <%= tags.join(", ") %></p>
+                <% if(myProfile.UserId===e.UserId){%>
+                <a class="white fatalClickable" href="/post/<%= e.id %>/delete">Delete Post</a>
+                <%}%>
             </div>
-        <%})%>
+        <%}%>
+        
     </div>
 </body>
 </html>

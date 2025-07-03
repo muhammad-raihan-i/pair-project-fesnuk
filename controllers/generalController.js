@@ -8,8 +8,7 @@ class GeneralController{
     static async getAddMyProfile(request,response){
         try{
             let UserId=request.session.userId
-            let data=await Profile.findByPk(UserId)
-            console.log("\n",data,"hai aku data")
+            let data=(await Profile.findAll({where:{UserId}}))[0]
             if(!data){
                 response.render("inputProfile")
             }else{
@@ -28,7 +27,6 @@ class GeneralController{
             //{phoneNumber,dateOfBirth,name,nickName,profilePicUrl,bio}
             let UserId=request.session.userId
             let {phoneNumber,dateOfBirth,name,nickName,profilePicUrl,bio}=request.body
-            console.log(phoneNumber,dateOfBirth,name,nickName,profilePicUrl,bio,UserId)
             await Profile.create({phoneNumber,dateOfBirth,name,nickName,profilePicUrl,bio,UserId})
             response.redirect("/")
         }catch(error){
@@ -43,6 +41,8 @@ class GeneralController{
     //number: 5
     static async getHome(request,response){
         try{
+            let UserId=request.session.userId
+            let myProfile=(await Profile.findAll({where:{UserId}}))[0]
             let posts=await Post.findAll({
                 include:{
                     model : PostTag,
@@ -51,7 +51,7 @@ class GeneralController{
                     }
                 }
             })
-            let poster=await Post.findAll({
+            let profiles=await Post.findAll({
                 include:{
                     model : User,
                     include: {
@@ -59,7 +59,8 @@ class GeneralController{
                     }
                 }
             })
-            response.render("home",{posts,poster})
+            console.log(posts)
+            response.render("home",{posts,profiles,myProfile})
         }catch(error){
             response.send(error)
         }
@@ -71,20 +72,45 @@ class GeneralController{
     static async getMyProfile(request,response){
         try{
             let UserId=request.session.userId
-            let profile=await Profile.findByPk(UserId)
-            response.send(profile)
+            let profile=await Profile.findAll({
+                where:{
+                    UserId:UserId
+                }
+            })
+            profile=profile[0]
+            let user=await User.findByPk(UserId)
+            let myProfile=profile
+            response.render("profile",{profile,user,myProfile})
         }catch(error){
             response.send(error)
         }
     }
     //method: get
-    //link: /profile/:userId
-    //usage: read
-    //number: 9
-    static async getReadOthersProfile(request,response){
+    //link: /profile/me/edit
+    //usage: update
+    //number: 7
+    static async getEditMyProfile(request,response){
         try{
-           //let {params,query}=request
-            let content=await ModelName.findAll()
+            let UserId=request.session.userId
+            let profile=(await Profile.findAll({where:{UserId}}))[0]
+            let myProfile=profile
+            response.render("editProfile",{profile,myProfile})
+        }catch(error){
+            response.send(error)
+        }
+    }
+    //method: post
+    //link: /profile/me/edit
+    //usage: update
+    //number: 8
+    static async postEditMyProfile(request,response){
+        try{
+            let UserId=request.session.userId
+            let {phoneNumber,dateOfBirth,name,nickName,profilePicUrl,bio}=request.body
+            await Profile.update(
+                {phoneNumber,dateOfBirth,name,nickName,profilePicUrl,bio},
+                {where:{UserId:UserId}})
+            response.redirect("/profile/me")
         }catch(error){
             response.send(error)
         }
@@ -95,8 +121,9 @@ class GeneralController{
     //number: 12
     static async getAddPost(request,response){
         try{
-            //let content=await ModelName.findAll()
-            response.render("addPost")
+            let UserId=request.session.userId
+            let myProfile=(await Profile.findAll({where:{UserId}}))[0]
+            response.render("addPost",{myProfile})
         }catch(error){
             response.send(error)
         }
@@ -107,8 +134,12 @@ class GeneralController{
     //number: 13
     static async postAddPost(request,response){
         try{
-       let {params,query}=request
-            await ModelName.create()
+            let UserId=request.session.userId
+            let {content,image}=request.body
+            let newPost=await Post.create({content,image,UserId})
+            let postId=newPost.id
+            await PostTag.create({PostId:postId,TagId:1})
+            response.redirect("/")
         }catch(error){
             response.send(error)
         }
@@ -143,8 +174,9 @@ class GeneralController{
     //number: 16
     static async getDeletePost(request,response){
         try{
-           //let {params,query}=request
-            let content=await ModelName.findAll()
+            let UserId=request.session.userId
+ 
+            response.redirect("/")
         }catch(error){
             response.send(error)
         }

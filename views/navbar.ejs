@@ -1,10 +1,14 @@
 <div class="navbar">
-    <a href="/">Fesnuk</a>
-    <a href="/profile/me">My Profile</a>
-    <a href="/post/add">Post Something...</a>
-    <form method="post" action="/profile">
-        <input type="text">
-        <input type="submit" value="Search by Username">
-    </form>
-    <a href="/logout"><div>Logout</div></a>
+    <div>
+        <b><a class="white" href="/">Fesnuk</a></b>
+    </div>
+    <div>
+        <b><a class="white" href="/profile/me"><img src="<%= myProfile.profilePicUrl %>" width="30px" height="30px"> My Profile (<%= myProfile.nickName %>)</a></b>
+    </div>
+    <div>
+        <b><a class="white" href="/post/add">Post Something...</a></b>
+    </div>
+    <div>
+        <b><a class="white" href="/logout"><div>Logout</div></a></b>  
+    </div>
 </div>

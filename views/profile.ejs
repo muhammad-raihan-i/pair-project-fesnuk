@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EJS's Profile</title>
+    <%- include("style.ejs") %>
+</head>
+<body>
+    <%- include("navbar.ejs") %>
+    <div class="profilePage">
+        <div class="bgLight p30">
+            <h1>@<%= user.username %></h1>
+            <h2>Full Name</h2>
+            <p><%= profile.name %></p>
+            <h2>Nickname</h2>
+            <p><%= profile.nickName %></p>
+            <h2>Bio</h2>
+            <p><%= profile.bio %></p>
+            <h2>Phone Number</h2>
+            <p><%= profile.phoneNumber %></p>
+            <h2>Date of Birth</h2>
+            <p><%= profile.dateOfBirth %></p>
+            <a class="white clickable" href="/profile/me/edit">Edit Profile</a>
+        </div>
+        <div class="bgDark picCenterRows">
+            <div></div>
+            <div class="picCenterRow">
+                <div></div>
+                <img src="<%= profile.profilePicUrl %>" width="400px" height="400px">
+                <div></div>
+            </div>
+            <div></div>
+        </div>
+    </div>
+    
+</body>
+</html>

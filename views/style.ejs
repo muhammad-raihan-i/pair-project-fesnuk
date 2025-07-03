@@ -19,9 +19,40 @@
     .navbar{
         background-color:rgb(53, 78, 151);
         color:white;
+        text-decoration:none;
+        padding-inline:20px;
     }
-    .navbar:a{
+    .clickable{
+        background-color:rgb(53, 78, 151);
         color:white;
+        text-decoration:none;
+        padding:5px 20px 5px 20px;
+        border-radius:10px;
+    }
+    .fatalClickable{
+        background-color:rgb(208, 10, 63);
+        color:white;
+        text-decoration:none;
+        padding:5px 20px 5px 20px;
+        border-radius:10px;
+    }
+    a.white:link,a.white:visited,a.white:hover,a.white:active{
+        color:white;
+        text-decoration:none;
+    }
+    .picCenterRow{
+        display:grid;
+        grid-template-columns: 1fr auto 1fr;
+    }
+    .picCenterRows{
+        display:grid;
+        grid-template-rows:auto auto auto;
+    }
+    .p30{
+        padding:30px;
+    }
+    .m10{
+        margin:10px;
     }
     .error{
         color:rgb(208, 10, 63);

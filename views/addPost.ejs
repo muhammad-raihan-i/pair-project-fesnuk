@@ -9,13 +9,13 @@
 <body>
     <%- include("navbar.ejs") %>
     <div class="profilePage">
-        <div class="bgLight">
+        <div class="bgLight p30">
             <h1>Post your Stuff</h1>
             <form method="post" action="/post/add">
                 <label>Content</label><br>
                 <textarea name="content"></textarea><br>
                 <label>Image</label><br>
-                <input name="image" type="text"><br>
+                <input name="image" type="text"><br><br>
                 <input type="submit" value="Submit">
             </form>
         </div>

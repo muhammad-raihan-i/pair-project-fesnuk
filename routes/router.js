@@ -30,10 +30,12 @@ router.get("/profile/input",GeneralController.getAddMyProfile) //create (4b)
 router.post("/profile/input",GeneralController.postAddMyProfile) //create (4c)
 router.get("/",GeneralController.getHome) //read (5)
 router.get("/profile/me",GeneralController.getMyProfile) //read (6)
+router.get("/profile/me/edit",GeneralController.getEditMyProfile) //update (7)
+router.post("/profile/me/edit",GeneralController.postEditMyProfile) //update (8)
 // router.get("/profile/:userId",GeneralController.getReadOthersProfile) //read (9)
 router.get("/post/add",GeneralController.getAddPost) //create (12)
 router.post("/post/add",GeneralController.postAddPost) //create (13)
-// router.get("/post/:id/delete",GeneralController.getDeletePost) //delete (16)
+router.get("/post/:id/delete",GeneralController.getDeletePost) //delete (16)
 router.get('/logout', SpecialController.logout)//logout 17
 
 module.exports=router

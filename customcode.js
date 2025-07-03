@@ -78,6 +78,6 @@ module.exports=Controller`
 }
 
 
-//console.log(makeRouter(splitArray(myText)))
+console.log(makeRouter(splitArray(myText)))
 //console.log("---------")
-console.log(makeController(splitArray(myText)))
+//console.log(makeController(splitArray(myText)))
