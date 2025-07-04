@@ -1,4 +1,5 @@
 'use strict';
+const hashPassword = require('../helpers/helper')
 const {
   Model
 } = require('sequelize');
@@ -16,15 +17,33 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
-    username: DataTypes.STRING,
-    email: DataTypes.STRING,
+    username: {type:DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notNull:{
+          msg:"Password Required"
+        },
+        notEmpty:{
+          msg:"Password Required"
+        }
+      }
+    },
+    email: {type:DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notNull:{
+          msg:"Username Required"
+        },
+        notEmpty:{
+          msg:"Username Required"
+        }
+      }
+    },
     password: DataTypes.STRING
   }, {
         hooks:{
       beforeCreate(instance, options){
-        const salt = bcrypt.genSaltSync(8);
-        const hash = bcrypt.hashSync(instance.password, salt);
-        instance.password = hash
+        hashPassword(instance)
       }
     },
     sequelize,

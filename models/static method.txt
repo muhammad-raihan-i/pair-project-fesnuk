@@ -1,0 +1,5 @@
+static method
+getter
+instance method
+validation error
+promise chaining

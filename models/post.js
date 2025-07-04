@@ -1,4 +1,6 @@
 'use strict';
+const {CensorSensor} = require('censor-sensor');
+const censor = new CensorSensor();
 const {
   Model
 } = require('sequelize');
@@ -15,7 +17,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Post.init({
-    content: DataTypes.STRING,
+    content: {type:DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notNull:{
+          msg:"Content required."
+        },
+        notNull:{
+          msg:"Content required."
+        },
+        hasProfanity(val){
+          if(censor.isProfaneIsh(val)){
+            throw new error("Contains profanity.")
+          }
+        }
+      }    
+    },
     image: DataTypes.STRING,
     UserId: {type:DataTypes.INTEGER,
       references:{

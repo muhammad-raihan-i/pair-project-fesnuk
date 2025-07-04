@@ -1,4 +1,5 @@
 const {User,Post,Tag,PostTag,Profile}=require("../models")
+const {Op} = require('sequelize')
 class GeneralController{
 
     //method: get
@@ -15,6 +16,9 @@ class GeneralController{
                 response.redirect("/")
             }
         }catch(error){
+            if(error.name==="SequelizeValidationError"){
+                error=error.errors
+            }
             response.send(error)
         }
     }
@@ -41,6 +45,7 @@ class GeneralController{
     //number: 5
     static async getHome(request,response){
         try{
+            const{search} = request.query
             let UserId=request.session.userId
             let myProfile=(await Profile.findAll({where:{UserId}}))[0]
             let posts=await Post.findAll({
@@ -59,6 +64,23 @@ class GeneralController{
                     }
                 }
             })
+
+            if(search){
+             posts=await Post.findAll({
+                include:{
+                    model : PostTag,
+                    include: {
+                        model : Tag,
+                    }
+                },
+                where : {
+                    content : {
+                        [Op.iLike] : `%${search}%`
+                    }
+                }
+            })
+
+            }
             console.log(posts)
             response.render("home",{posts,profiles,myProfile})
         }catch(error){
@@ -82,6 +104,7 @@ class GeneralController{
             let myProfile=profile
             response.render("profile",{profile,user,myProfile})
         }catch(error){
+            
             response.send(error)
         }
     }
@@ -112,6 +135,9 @@ class GeneralController{
                 {where:{UserId:UserId}})
             response.redirect("/profile/me")
         }catch(error){
+            if(error.name==="SequelizeValidationError"){
+                error=error.errors
+            }
             response.send(error)
         }
     }
@@ -141,6 +167,9 @@ class GeneralController{
             await PostTag.create({PostId:postId,TagId:1})
             response.redirect("/")
         }catch(error){
+            if(error.name==="SequelizeValidationError"){
+                error=error.errors
+            }
             response.send(error)
         }
     }
@@ -173,10 +202,12 @@ class GeneralController{
     //usage: delete
     //number: 16
     static async getDeletePost(request,response){
-        try{
-            let UserId=request.session.userId
- 
-            response.redirect("/")
+        try{          
+            const {id} = request.params
+            console.log(id, 'ini id')
+            let data = await Post.findByPk(id)
+            await data.destroy()
+            response.redirect('/')
         }catch(error){
             response.send(error)
         }
