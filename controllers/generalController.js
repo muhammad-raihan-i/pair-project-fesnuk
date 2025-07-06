@@ -8,17 +8,15 @@ class GeneralController{
     //number: 4b
     static async getAddMyProfile(request,response){
         try{
+            const{error}=request.query
             let UserId=request.session.userId
             let data=(await Profile.findAll({where:{UserId}}))[0]
             if(!data){
-                response.render("inputProfile")
+                response.render("inputProfile",{error})
             }else{
                 response.redirect("/")
             }
         }catch(error){
-            if(error.name==="SequelizeValidationError"){
-                error=error.errors
-            }
             response.send(error)
         }
     }
@@ -34,8 +32,10 @@ class GeneralController{
             await Profile.create({phoneNumber,dateOfBirth,name,nickName,profilePicUrl,bio,UserId})
             response.redirect("/")
         }catch(error){
-            response.send(error)
-
+            if(error.name==="SequelizeValidationError"){
+                error=error.errors.map(el => el.message)
+            }
+            response.redirect(`/profile/input?error=${error}`)
         }
     }
 
@@ -45,7 +45,8 @@ class GeneralController{
     //number: 5
     static async getHome(request,response){
         try{
-            const{search} = request.query
+            
+            const{search,content} = request.query
             let UserId=request.session.userId
             let myProfile=(await Profile.findAll({where:{UserId}}))[0]
             let posts=await Post.findAll({
@@ -66,24 +67,13 @@ class GeneralController{
             })
 
             if(search){
-             posts=await Post.findAll({
-                include:{
-                    model : PostTag,
-                    include: {
-                        model : Tag,
-                    }
-                },
-                where : {
-                    content : {
-                        [Op.iLike] : `%${search}%`
-                    }
-                }
-            })
+             posts=await Post.findPostByContent(search)
 
             }
-            console.log(posts)
-            response.render("home",{posts,profiles,myProfile})
+            response.render("home",{posts,profiles,myProfile,content})
         }catch(error){
+            console.log(error);
+            
             response.send(error)
         }
     }
@@ -93,6 +83,7 @@ class GeneralController{
     //number: 6
     static async getMyProfile(request,response){
         try{
+
             let UserId=request.session.userId
             let profile=await Profile.findAll({
                 where:{
@@ -147,9 +138,10 @@ class GeneralController{
     //number: 12
     static async getAddPost(request,response){
         try{
+            const{content} = request.query
             let UserId=request.session.userId
             let myProfile=(await Profile.findAll({where:{UserId}}))[0]
-            response.render("addPost",{myProfile})
+            response.render("addPost",{myProfile,content})
         }catch(error){
             response.send(error)
         }
@@ -207,7 +199,7 @@ class GeneralController{
             console.log(id, 'ini id')
             let data = await Post.findByPk(id)
             await data.destroy()
-            response.redirect('/')
+            response.redirect(`/?content=post dengan id ${id} sudah terhapus`)
         }catch(error){
             response.send(error)
         }

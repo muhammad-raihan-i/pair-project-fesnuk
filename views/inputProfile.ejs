@@ -10,20 +10,26 @@
     <div class="profilePage">
         <div class="bgLight p30">
             <h1>Introduce Yourself!</h1>
+          <% if (error) { %>    
+            <% error = error.split(',') %>  
+            <% error.forEach(err => { %>
+                <p style="color: red;"><%= err %></p>
+            <% }) %>
+        <% } %>
             <form action="/profile/input" method="post">
                 <label>Phone Number</label><br>
-                <input type="text" name="phoneNumber"><br>
+                <input type="text" name="phoneNumber" class="form-control" style="width: 300px;"><br>
                 <label>Date of Birth</label><br>
-                <input type="date" name="dateOfBirth"><br>
+                <input type="date" name="dateOfBirth" class="form-control" style="width: 300px;"><br>
                 <label>Full Name</label><br>
-                <input type="text" name="name"><br>
+                <input type="text" name="name"class="form-control" style="width: 300px;"><br>
                 <label>Nickname</label><br>
-                <input type="text" name="nickName"><br>
+                <input type="text" name="nickName" class="form-control" style="width: 300px;"><br>
                 <label>Profile Picture</label><br>
-                <input type="text" name="profilePicUrl"><br>
+                <input type="text" name="profilePicUrl" class="form-control" style="width: 300px;"><br>
                 <label>Bio</label><br>
-                <textarea name="bio"></textarea><br>
-                <input type="submit" value="Submit">
+                <textarea name="bio" class="form-control" style="width: 300px;"></textarea><br>
+                <input type="submit" value="Submit" class="btn btn-secondary">
             </form>
         </div>
         <div class="bgDark">

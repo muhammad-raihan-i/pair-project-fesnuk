@@ -1,29 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post Your Stuff</title>
-    <%- include("style.ejs") %>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Your Stuff</title>
+  <%- include("style.ejs") %>
+  <style>
+    .form-container {
+      max-width: 600px;
+      background-color: #fff;
+      margin: 80px auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container h1 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+      color: #444;
+    }
+
+    textarea,
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      resize: vertical;
+      font-size: 15px;
+    }
+
+    textarea {
+      height: 100px;
+    }
+
+    input[type="submit"] {
+      margin-top: 20px;
+      background-color: #3b5998;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #2d4373;
+    }
+
+    .bgDark {
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
-    <%- include("navbar.ejs") %>
-    <div class="profilePage">
-        <div class="bgLight p30">
-            <h1>Post your Stuff</h1>
-            <form method="post" action="/post/add">
-                <label>Content</label><br>
-                <textarea name="content"></textarea><br>
-                <label>Image</label><br>
-                <input name="image" type="text"><br><br>
-                <input type="submit" value="Submit">
-            </form>
-        </div>
-        <div class="bgDark">
+  <%- include("navbar.ejs") %>
 
-        </div>
-    </div>
-    
-    
+  <div class="form-container">
+    <h1>Post something</h1>
+    <form method="post" action="/post/add">
+      <label>Content</label>
+      <textarea name="content" placeholder="What’s on your mind?"></textarea>
+
+      <label>Image</label>
+      <input name="image" type="text" placeholder="Image URL (optional)">
+
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+
+  <div class="bgDark"></div>
 </body>
 </html>

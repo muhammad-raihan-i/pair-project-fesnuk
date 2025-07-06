@@ -7,6 +7,7 @@ const router=require("./routes/router")
 app.set("view engine","ejs")
 app.use(express.urlencoded({extended:false}))
 
+
 app.use(session({
   secret: 'rahasia',  //untuk mengamankan session
   resave: false, //menyimpan data jika hanya ada perubahan agar tida banyak memory atau proses

@@ -2,7 +2,8 @@
 const {CensorSensor} = require('censor-sensor');
 const censor = new CensorSensor();
 const {
-  Model
+  Model,
+  Op
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Post extends Model {
@@ -14,6 +15,22 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.User,{foreignKey:"UserId"})
       this.hasMany(models.PostTag,{foreignKey:"PostId"})
+    }
+
+    static async findPostByContent(content){
+      return await this.findAll({
+                      include:{
+                          model : sequelize.models.PostTag,
+                          include: {
+                              model : sequelize.models.Tag,
+                          }
+                      },
+                      where : {
+                          content : {
+                              [Op.iLike] : `%${content}%`
+                          }
+                      }
+                  })
     }
   }
   Post.init({

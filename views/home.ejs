@@ -4,32 +4,124 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%- include("style.ejs") %>
-    <title>FESNUK</title>
+<style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+    }
+
+    .homePage {
+      padding-top: 60px;
+    }
+
+    .m10 {
+      max-width: 700px;
+      margin: 0 auto 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .m10 input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .m10 input[type="submit"] {
+      background-color: #3b5998;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .postingan {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      padding: 20px;
+      margin: 10px auto;
+      max-width: 700px;
+      transition: transform 0.2s ease;
+    }
+
+    .postingan:hover {
+      transform: translateY(-3px);
+    }
+
+    .postingan img {
+      border-radius: 8px;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 10px 0;
+    }
+
+    .postingan p {
+      margin: 5px 0;
+    }
+
+    .postingan .profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .profile img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .fatalClickable {
+      color: #c0392b;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 10px;
+      display: inline-block;
+    }
+
+    .fatalClickable:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <%- include("navbar.ejs") %>
-    <div class="homePage bgDark">
-        <br>
-        <div class="m10">
-        <form method="get" action="/">
-            <input type="text" name = "search">
-            <input type="submit" value="Search by Content">
-        </form>
-        </div>
-        <% for(let i=0;i<posts.length;i++){e=posts[i]%>
-            <div class="postingan bgLight p30 m10">
-                
-                <p><img src="<%= profiles[i].User.Profile.profilePicUrl %>" width="60px" height="60px"> @<%= profiles[i].User.username %></p>
-                <img src="<%= e.image %>" width="300px" height="auto"><br>
-                <p><%= e.content %></p>
-                <% let tags=[]; e.PostTags.forEach(f=>{tags.push(f.Tag.tagName)}) %>
-                <p>Tags: <%= tags.join(", ") %></p>
-                <% if(myProfile.UserId===e.UserId){%>
-                <a class="white fatalClickable" href="/post/<%= e.id %>/delete">Delete Post</a>
-                <%}%>
-            </div>
-        <%}%>
-        <br>
+  <%- include("navbar.ejs") %>
+  <div class="homePage bgDark">
+    <div class="m10" style="margin-top: 30px;">
+      <form method="get" action="/" style="display:flex; width: 100%;">
+        <input type="text" name="search" placeholder="Search content...">
+        <input type="submit" value="Search">
+      </form>
     </div>
+
+    <% if (content) { %>
+      <p style="color: red; text-align: center;"><%= content %></p>
+    <% } %>
+
+    <% for(let i=0; i<posts.length; i++) { e = posts[i] %>
+      <div class="postingan">
+        <div class="profile">
+          <img src="<%= profiles[i].User.Profile.profilePicUrl %>" alt="profile">
+          @<%= profiles[i].User.username %>
+        </div>
+        <img src="<%= e.image %>" alt="post image">
+        <p><%= e.content %></p>
+        <% let tags=[]; e.PostTags.forEach(f=>{tags.push(f.Tag.tagName)}) %>
+        <p>Tags: <%= tags.join(", ") %></p>
+        <% if(myProfile.UserId===e.UserId) { %>
+          <a class="fatalClickable" href="/post/<%= e.id %>/delete">Delete Post</a>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+</body>
 </body>
 </html>

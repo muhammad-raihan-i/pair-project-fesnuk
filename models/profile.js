@@ -18,16 +18,17 @@ module.exports = (sequelize, DataTypes) => {
      get formatDate(){
       return this.dateOfBirth.toISOString().split('T')[0]
      }
+
   }
   Profile.init({
     phoneNumber: {type:DataTypes.STRING,
       allowNull:false,
       validate:{
         notNull:{
-          msg:"Name Required"
+          msg:"Phone Number Required"
         },
         notEmpty:{
-          msg:"Name Required"
+          msg:"Phone Number Required"
         }
       }
     },
@@ -42,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         isToday(val){
           let today=new Date().getFullYear()
-          let birth=new Date(val).getFullYear
+          let birth=new Date(val).getFullYear()
           if(today-birth<=10){
             throw new Error("Minimum age is 10.")
           }
@@ -75,7 +76,7 @@ module.exports = (sequelize, DataTypes) => {
       validate:{
         hasProfanity(val){
           if(censor.isProfaneIsh(val)){
-            throw new error("Contains profanity.")
+            throw new Error("Contains profanity.")
           }
         }
       }

@@ -8,23 +8,27 @@
 </head>
 <body>
     <div class="loginPage">
-        <div id="loginDivKiri" class="bgDark">
+        <div id="loginDivKiri">
+            <center>
+            <img src="https://storage.googleapis.com/lashodia-product-image/img.jpg" alt="" style="width: 700px; height: 600px; " >
+            </center>
         </div>
         <div id="loginDivKanan" class="bgLight p30">
             <form method="post" action="/login">
+                
                 <h2>Login</h2>
                 <% errors=""%>
                 <% if(errors){%>
                     <p id="error"><%= error %></p>
                 <%}%>
                 <label>Username</label><br>
-                <input type="text" name="username"><br>
+                <input type="text" name="username" class="form-control" style="width: 300px;"><br>
                 <label>Password</label><br>
-                <input type="password" name="password"><br><br>
-                <input type="submit" value="Login"><br>
+                <input type="password" name="password" class="form-control" style="width: 300px;"><br><br>
+                <input type="submit" value="Login" class="btn btn-secondary"><br>
             </form><br>
             <form method="get" action="/register">
-                <input type="submit" value="Register"><br>
+                <input type="submit" value="Register" class="btn btn-light"><br>
             </form>
         </div>
     </div>

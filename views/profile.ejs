@@ -1,38 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EJS's Profile</title>
-    <%- include("style.ejs") %>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EJS's Profile</title>
+  <%- include("style.ejs") %>
+  <style>
+    .profilePage {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 100px;
+      padding: 20px;
+    }
+
+    .profileInfo {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 500px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .profileInfo h1 {
+      margin-bottom: 25px;
+      color: #333;
+    }
+
+    .profileInfo h2 {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .profileInfo p {
+      margin: 5px 0 15px;
+      font-size: 15px;
+      color: #222;
+    }
+
+    .profileInfo a.clickable {
+      display: inline-block;
+      margin-top: 20px;
+      background-color: #3b5998;
+      color: white;
+      padding: 10px 16px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background-color 0.2s ease;
+    }
+
+    .profileInfo a.clickable:hover {
+      background-color: #2d4373;
+    }
+
+    .profileImage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .profileImage img {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (max-width: 768px) {
+      .profileImage img {
+        width: 220px;
+        height: 220px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <%- include("navbar.ejs") %>
-    <div class="profilePage">
-        <div class="bgLight p30">
-            <h1>@<%= user.username %></h1>
-            <h2>Full Name</h2>
-            <p><%= profile.name %></p>
-            <h2>Nickname</h2>
-            <p><%= profile.nickName %></p>
-            <h2>Bio</h2>
-            <p><%= profile.bio %></p>
-            <h2>Phone Number</h2>
-            <p><%= profile.phoneNumber %></p>
-            <h2>Date of Birth</h2>
-            <p><%= profile.formatDate %></p>
-            <a class="white clickable" href="/profile/me/edit">Edit Profile</a>
-        </div>
-        <div class="bgDark picCenterRows">
-            <div></div>
-            <div class="picCenterRow">
-                <div></div>
-                <img src="<%= profile.profilePicUrl %>" width="400px" height="400px">
-                <div></div>
-            </div>
-            <div></div>
-        </div>
+  <%- include("navbar.ejs") %>
+
+  <div class="profilePage">
+    <div class="profileInfo bgLight p30">
+      <h1>@<%= user.username %></h1>
+
+      <h2>Full Name</h2>
+      <p><%= profile.name %></p>
+
+      <h2>Nickname</h2>
+      <p><%= profile.nickName %></p>
+
+      <h2>Bio</h2>
+      <p><%= profile.bio %></p>
+
+      <h2>Phone Number</h2>
+      <p><%= profile.phoneNumber %></p>
+
+      <h2>Date of Birth</h2>
+      <p><%= profile.formatDate %></p>
+
+      <a class="white clickable" href="/profile/me/edit">Edit Profile</a>
     </div>
-    
+
+    <div class="profileImage bgDark">
+      <img src="<%= profile.profilePicUrl %>" alt="Profile Picture" />
+    </div>
+  </div>
 </body>
 </html>
